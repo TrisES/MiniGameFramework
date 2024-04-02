@@ -1,4 +1,6 @@
-﻿namespace MiniGameFramework.WorldClasses
+﻿using System.Xml;
+
+namespace MiniGameFramework.WorldClasses
 {
     public class World : IWorld
     {
@@ -8,6 +10,11 @@
 
         public World() { }
         public World(int width, int height)
+        {
+            InitializeTiles(width, height);
+        }
+
+        protected void InitializeTiles(int width, int height)
         {
             Width = width;
             Height = height;
@@ -20,6 +27,48 @@
                 }
             }
         }
+
+        /// <summary>
+        /// Constructor that takes a xml config file path and creates a world based on the config file.
+        /// </summary>
+        /// <param name="configFilePath"></param>
+        public World(string configFilePath) 
+        {
+            if (!File.Exists(configFilePath))
+            {
+                throw new FileNotFoundException();
+            }
+
+            XmlDocument doc = new XmlDocument();
+            doc.Load(configFilePath);
+
+            // Read Width
+            int readWidth = 0;
+            XmlNode? widthNode = doc.DocumentElement.SelectSingleNode("/World/Width");
+            if (widthNode != null)
+            {
+                readWidth = int.Parse(widthNode.InnerText);
+            }
+            else
+            {
+                throw new XmlException("Width node not found in the config file.");
+            }
+
+            // Read Height
+            int readHeight = 0;
+            XmlNode? heightNode = doc.DocumentElement.SelectSingleNode("/World/Height");
+            if (heightNode != null)
+            {
+                readHeight = int.Parse(heightNode.InnerText);
+            }
+            else
+            {
+                throw new XmlException("Height node not found in the config file.");
+            }
+
+            InitializeTiles(readWidth, readHeight);
+        } 
+
         private void CheckBounds(int x, int y)
         {
             if (x < 0 || x >= Width || y < 0 || y >= Height)
@@ -54,6 +103,10 @@
             TilesGrid[x, y].Contents.Add(obj);
         }
 
+        #region Update methods
+        /// <summary>
+        /// Updates the whole world. All objects in all tiles will be updated.
+        /// </summary>
         public void UpdateWorld()
         {
             foreach (Tile tile in TilesGrid)
@@ -65,6 +118,13 @@
             }
         }
 
+        /// <summary>
+        /// Updates a part(an area) of the world. All objects in the tiles from startX to endX and startY to endY will be updated.
+        /// </summary>
+        /// <param name="startX"></param>
+        /// <param name="startY"></param>
+        /// <param name="endX"></param>
+        /// <param name="endY"></param>
         public void UpdatePartOfWorld(int startX, int startY, int endX, int endY)
         {
             CheckBounds(startX, startY);
@@ -82,6 +142,11 @@
             }
         }
 
+        /// <summary>
+        /// Updates a part(single tile) of the world. All objects in the tile at x and y will be updated.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
         public void UpdatePartOfWorld(int x, int y)
         {
             CheckBounds(x, y);
@@ -91,5 +156,6 @@
                 obj.Update();
             }
         }
+        #endregion
     }
 }
