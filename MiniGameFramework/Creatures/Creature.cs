@@ -6,10 +6,13 @@ namespace MiniGameFramework.Creatures
 {
     public abstract class Creature : WorldObject
     {
-        public string Name { get; set; }
         public int Health { get; set; }
         public int BaseDefense { get; set; }
         public int BaseAttack { get; set; }
+
+        public abstract int ArmorDefenseSum { get; }
+        public abstract int WeaponsAttackSum { get; }
+
         public Inventory Inventory { get; set; }
         public ICreatureCombatState State { get; set; }
 
@@ -29,12 +32,15 @@ namespace MiniGameFramework.Creatures
         }
         public void Attack(Creature target)
         {
-            State.Hit(this, target);
+            int damage = State.CalculateDamage(this);
+            target.ReceiveDamage(damage);
         }
 
         public void ReceiveDamage(int damage)
         {
-            State.RecieveHit(this, damage);
+            int defense = State.CalculateDefense(this);
+            int damageTaken = Math.Max(0, damage - defense); // Ensure damage taken is not negative'
+            Health -= damageTaken;
         }
 
         public bool MoveTo(Tile destinationTile)
