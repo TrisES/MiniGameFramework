@@ -1,5 +1,6 @@
 ﻿using MiniGameFramework.Creatures.CreatureState;
 using MiniGameFramework.Items;
+using MiniGameFramework.Logging;
 using MiniGameFramework.WorldClasses;
 
 namespace MiniGameFramework.Creatures
@@ -33,14 +34,21 @@ namespace MiniGameFramework.Creatures
         public void Attack(Creature target)
         {
             int damage = State.CalculateDamage(this);
+            GameLogger.Log($"{Name}{State.GetType()} attacks {target.Name} for {damage} damage.");
             target.ReceiveDamage(damage);
         }
 
         public void ReceiveDamage(int damage)
         {
             int defense = State.CalculateDefense(this);
-            int damageTaken = Math.Max(0, damage - defense); // Ensure damage taken is not negative'
-            Health -= damageTaken;
+            int actualDamage = Math.Max(0, damage - defense); // Ensure damage taken is not negative'
+            Health -= actualDamage;
+            GameLogger.Log($"{Name}{State.GetType()} has {defense} and receives {actualDamage} damage. Remaining health: {Health}");
+        }
+
+        public int Attack()
+        {
+            return State.CalculateDamage(this);
         }
 
         public bool MoveTo(Tile destinationTile)
