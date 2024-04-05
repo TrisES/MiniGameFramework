@@ -1,9 +1,8 @@
-﻿using MiniGameFramework.Creatures;
+﻿using MiniGameFramework.MarkerInterfaces;
 
 namespace MiniGameFramework.Items
 {
-    public interface IItem
+    public interface IItem : IHasName
     {
-        string Name { get; set; }
     }
 }
