@@ -1,4 +1,4 @@
-﻿using MiniGameFramework.Creatures.CreatureState;
+﻿using MiniGameFramework.Creatures.CombatStrategy;
 using MiniGameFramework.Items;
 using MiniGameFramework.Logging;
 using MiniGameFramework.WorldClasses;
@@ -15,7 +15,7 @@ namespace MiniGameFramework.Creatures
         public abstract int WeaponsAttackSum { get; }
 
         public Inventory Inventory { get; set; }
-        public ICreatureCombatState State { get; set; }
+        public ICombatStrategy CombatStrategy { get; set; }
 
         public Creature(string name, int health, int baseDefense, int baseAttack) : base(name)
         {
@@ -24,7 +24,7 @@ namespace MiniGameFramework.Creatures
             BaseDefense = baseDefense;
             BaseAttack = baseAttack;
             Inventory = new Inventory();
-            State = new NormalCombatState();
+            CombatStrategy = new CombatStrategyNormal();
         }
 
         public override void Update()
@@ -33,22 +33,22 @@ namespace MiniGameFramework.Creatures
         }
         public void Attack(Creature target)
         {
-            int damage = State.CalculateDamage(this);
-            GameLogger.Log($"{Name}{State.GetType()} attacks {target.Name} for {damage} damage.");
+            int damage = CombatStrategy.CalculateDamage(this);
+            GameLogger.Log($"{Name}{CombatStrategy.GetType()} attacks {target.Name} for {damage} damage.");
             target.ReceiveDamage(damage);
         }
 
         public void ReceiveDamage(int damage)
         {
-            int defense = State.CalculateDefense(this);
+            int defense = CombatStrategy.CalculateDefense(this);
             int actualDamage = Math.Max(0, damage - defense); // Ensure damage taken is not negative'
             Health -= actualDamage;
-            GameLogger.Log($"{Name}{State.GetType()} has {defense} and receives {actualDamage} damage. Remaining health: {Health}");
+            GameLogger.Log($"{Name}{CombatStrategy.GetType()} has {defense} and receives {actualDamage} damage. Remaining health: {Health}");
         }
 
         public int Attack()
         {
-            return State.CalculateDamage(this);
+            return CombatStrategy.CalculateDamage(this);
         }
 
         public bool MoveTo(Tile destinationTile)
