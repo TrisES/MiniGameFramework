@@ -1,6 +1,6 @@
 ﻿using MiniGameFramework.Creatures;
 
-namespace MiniGameFramework.Items.ExampleItems
+namespace MiniGameFramework.Items.Weapons
 {
     public class BaseWeapon : IWeapon
     {
