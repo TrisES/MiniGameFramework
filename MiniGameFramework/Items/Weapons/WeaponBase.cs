@@ -2,6 +2,9 @@
 
 namespace MiniGameFramework.Items.Weapons
 {
+    /// <summary>
+    /// Abstract 'Weapon' 'Creator' class that implements the 'IWeapon' interface.
+    /// </summary>
     public abstract class WeaponBase : IWeapon
     {
         public abstract string Name { get; set; }
@@ -17,5 +20,6 @@ namespace MiniGameFramework.Items.Weapons
         {
             return $"{Name} ({Damage} damage)";
         }
+
     }
 }

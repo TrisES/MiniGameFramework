@@ -1,7 +1,6 @@
 ﻿namespace MiniGameFramework.Items.Weapons.Interfaces
 {
-    public interface IWeaponFactory
+    public interface IOffHandWeapon : IWeapon
     {
-        IWeapon Create();
     }
 }
