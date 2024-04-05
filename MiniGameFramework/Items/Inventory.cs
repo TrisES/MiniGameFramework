@@ -1,6 +1,6 @@
 ﻿namespace MiniGameFramework.Items
 {
-    public class Inventory
+    public class Inventory : IInventory
     {
     }
 }

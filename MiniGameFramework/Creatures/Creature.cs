@@ -14,7 +14,7 @@ namespace MiniGameFramework.Creatures
         public abstract int ArmorDefenseSum { get; }
         public abstract int WeaponsAttackSum { get; }
 
-        public Inventory Inventory { get; set; }
+        public IInventory Inventory { get; set; }
         public ICombatStrategy CombatStrategy { get; set; }
 
         public Creature(string name, int health, int baseDefense, int baseAttack) : base(name)
