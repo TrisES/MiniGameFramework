@@ -10,10 +10,17 @@ namespace MiniGameFramework.Creatures
 {
     public abstract class Creature : WorldObject
     {
+        #region Properties
         public int Health { get; set; }
         public int BaseDefense { get; set; }
         public int BaseAttack { get; set; }
 
+        /// <summary>
+        /// Gets the sum of the defense values of all armor items equipped by the creature.
+        /// If the creature has no armor equipped, the sum is 0.
+        /// Foreach property in the runtime class, check if it implements the IArmor interface and if it does, add the defense value to the sum.
+        /// For better performance, could be overridden in derived classes to avoid reflection.
+        /// </summary>
         public int ArmorDefenseSum 
         { 
             get 
@@ -43,6 +50,13 @@ namespace MiniGameFramework.Creatures
                 return sum;
             }
         }
+
+        /// <summary>
+        /// Gets the sum of the attack values of all weapon items equipped by the creature.
+        /// If the creature has no weapons equipped, the sum is 0.
+        /// Foreach property in the runtime class, check if it implements the IWeapon interface and if it does, add the damage value to the sum.
+        /// For better performance, could be overridden in derived classes to avoid reflection.
+        /// </summary>
         public int WeaponsAttackSum 
         { 
             get
@@ -75,6 +89,7 @@ namespace MiniGameFramework.Creatures
 
         public IInventory Inventory { get; set; }
         public ICombatStrategy CombatStrategy { get; set; }
+        #endregion
 
         public Creature(string name, int health, int baseDefense, int baseAttack) : base(name)
         {
