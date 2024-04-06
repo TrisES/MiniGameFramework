@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MiniGameFramework.Creatures.Tests
+namespace MiniGameFrameworkTests.Creatures.Tests
 {
     [TestClass()]
     public class CreatureTests

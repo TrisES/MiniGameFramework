@@ -15,20 +15,36 @@ namespace MiniGameFramework.Logging
         /// </summary>
         static GameLogger()
         {
+
+            // Delete the log files if they exist (to start fresh)
+            //File.Delete(@"C:\Temp\Logs\GameLog.txt");
+            //File.Delete(@"C:\Temp\Logs\ErrorLog.txt");
+
             traceSource.Switch.Level = SourceLevels.All; // Set the level of logging detail
 
             // Setup: Console trace listener. 
             ConsoleTraceListener consoleListener = new ConsoleTraceListener();
             traceSource.Listeners.Add(consoleListener);
 
-            // Additional listeners can be added here (e.g., for logging to a file)
             // Setup: Text file trace listener.
-            TraceListener gameLog = new TextWriterTraceListener("GameLog.txt");
+            TraceListener gameLog = new TextWriterTraceListener(@"C:\Temp\Logs\GameLog.txt");
             traceSource.Listeners.Add(gameLog);
 
             // Setup: Error log trace listener.
-            TraceListener errorLog = new TextWriterTraceListener("ErrorLog.txt");
-            errorLog.Filter = new EventTypeFilter(SourceLevels.Error);
+            TraceListener errorLog = new TextWriterTraceListener(@"C:\Temp\Logs\ErrorLog.txt");
+            errorLog.Filter = new EventTypeFilter(SourceLevels.Error); // Only log errors or worse
+            traceSource.Listeners.Add(errorLog);
+
+            // Flush the buffer after each write
+            traceSource.Flush();
+        }
+
+        /// <summary>
+        /// Closes the trace source.
+        /// </summary>
+        public static void Close()
+        {
+            traceSource.Close();
         }
 
         /// <summary>
@@ -39,6 +55,7 @@ namespace MiniGameFramework.Logging
         public static void Log(string message, TraceEventType eventType = TraceEventType.Information)
         {
             traceSource.TraceEvent(eventType, 0, message);
+            traceSource.Flush();
         }
     }
 }   
