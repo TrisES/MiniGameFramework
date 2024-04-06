@@ -1,11 +1,13 @@
-﻿namespace MiniGameFramework.Creatures.CombatStrategy
+﻿using MiniGameFramework.MarkerInterfaces;
+
+namespace MiniGameFramework.Creatures.CombatStrategy
 {
     /// <summary>
     /// Interface for the combat strategy/behaviour of a creature.
     /// Contains methods for calculating damage and defense.
     /// Can be implemented by different concrete strategy classes to provide different combat behaviours, like half damage, double damage, etc.
     /// </summary>
-    public interface ICombatStrategy
+    public interface ICombatStrategy : IHasName
     {
         /// <summary>
         /// Calculate the damage to be dealt by the attacking creature.

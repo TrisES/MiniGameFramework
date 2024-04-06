@@ -5,6 +5,8 @@
     /// </summary>
     public class CombatStrategyNormal : ICombatStrategy
     {
+        public string Name { get { return "Normal"; } }
+
         /// <summary>
         /// Sums the base attack and weapons attack of the attacker to calculate the damage.
         /// </summary>

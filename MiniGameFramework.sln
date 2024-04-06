@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniGameFramework", "MiniGameFramework\MiniGameFramework.csproj", "{55C2ECBE-21CC-4224-A3A5-E9523C17B5E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiniGameFramework", "MiniGameFramework\MiniGameFramework.csproj", "{55C2ECBE-21CC-4224-A3A5-E9523C17B5E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniGameFrameworkTests", "MiniGameFrameworkTests\MiniGameFrameworkTests.csproj", "{2E1D1217-A365-457D-992D-114DDC401EED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{55C2ECBE-21CC-4224-A3A5-E9523C17B5E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55C2ECBE-21CC-4224-A3A5-E9523C17B5E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55C2ECBE-21CC-4224-A3A5-E9523C17B5E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E1D1217-A365-457D-992D-114DDC401EED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E1D1217-A365-457D-992D-114DDC401EED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E1D1217-A365-457D-992D-114DDC401EED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E1D1217-A365-457D-992D-114DDC401EED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

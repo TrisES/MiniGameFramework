@@ -21,7 +21,7 @@ namespace MiniGameFramework.Creatures
         /// Foreach property in the runtime class, check if it implements the IArmor interface and if it does, add the defense value to the sum.
         /// For better performance, could be overridden in derived classes to avoid reflection.
         /// </summary>
-        public int ArmorDefenseSum 
+        public virtual int ArmorDefenseSum 
         { 
             get 
             {
@@ -57,7 +57,7 @@ namespace MiniGameFramework.Creatures
         /// Foreach property in the runtime class, check if it implements the IWeapon interface and if it does, add the damage value to the sum.
         /// For better performance, could be overridden in derived classes to avoid reflection.
         /// </summary>
-        public int WeaponsAttackSum 
+        public virtual int WeaponsAttackSum 
         { 
             get
             {
@@ -91,7 +91,7 @@ namespace MiniGameFramework.Creatures
         public ICombatStrategy CombatStrategy { get; set; }
         #endregion
 
-        public Creature(string name, int health, int baseDefense, int baseAttack) : base(name)
+        public Creature(string name, int health = 100, int baseDefense = 10, int baseAttack = 10) : base(name)
         {
             Name = name;
             Health = health;
@@ -108,7 +108,7 @@ namespace MiniGameFramework.Creatures
         public void Attack(Creature target)
         {
             int damage = CombatStrategy.CalculateDamage(this);
-            GameLogger.Log($"{Name}{CombatStrategy.GetType()} attacks {target.Name} for {damage} damage.");
+            GameLogger.Log($"{Name}{CombatStrategy.Name} attacks {target.Name} for {damage} damage.");
             target.ReceiveDamage(damage);
         }
 
@@ -117,7 +117,7 @@ namespace MiniGameFramework.Creatures
             int defense = CombatStrategy.CalculateDefense(this);
             int actualDamage = Math.Max(0, damage - defense); // Ensure damage taken is not negative'
             Health -= actualDamage;
-            GameLogger.Log($"{Name}{CombatStrategy.GetType()} has {defense} and receives {actualDamage} damage. Remaining health: {Health}");
+            GameLogger.Log($"{Name}{CombatStrategy.Name} has {defense} defense and receives {actualDamage} damage. Remaining health: {Health}");
         }
 
         public int Attack()
