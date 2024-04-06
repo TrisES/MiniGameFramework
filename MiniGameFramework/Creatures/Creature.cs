@@ -108,7 +108,7 @@ namespace MiniGameFramework.Creatures
         public void Attack(Creature target)
         {
             int damage = CombatStrategy.CalculateDamage(this);
-            GameLogger.Log($"{Name}{CombatStrategy.Name} attacks {target.Name} for {damage} damage.");
+            GameLogger.Log($"{Name}({CombatStrategy.Name}) attacks {target.Name} for {damage} damage.");
             target.ReceiveDamage(damage);
         }
 
@@ -117,7 +117,7 @@ namespace MiniGameFramework.Creatures
             int defense = CombatStrategy.CalculateDefense(this);
             int actualDamage = Math.Max(0, damage - defense); // Ensure damage taken is not negative'
             Health -= actualDamage;
-            GameLogger.Log($"{Name}{CombatStrategy.Name} has {defense} defense and receives {actualDamage} damage. Remaining health: {Health}");
+            GameLogger.Log($"{Name}({CombatStrategy.Name}) has {defense} defense and receives {actualDamage} damage. Remaining health: {Health}");
         }
 
         public int Attack()
