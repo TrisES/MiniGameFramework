@@ -15,12 +15,20 @@ namespace MiniGameFramework.Logging
         /// </summary>
         static GameLogger()
         {
+            traceSource.Switch.Level = SourceLevels.All; // Set the level of logging detail
+
             // Setup: Console trace listener. 
             ConsoleTraceListener consoleListener = new ConsoleTraceListener();
             traceSource.Listeners.Add(consoleListener);
-            traceSource.Switch.Level = SourceLevels.All; // Set the level of logging detail
 
             // Additional listeners can be added here (e.g., for logging to a file)
+            // Setup: Text file trace listener.
+            TraceListener gameLog = new TextWriterTraceListener("GameLog.txt");
+            traceSource.Listeners.Add(gameLog);
+
+            // Setup: Error log trace listener.
+            TraceListener errorLog = new TextWriterTraceListener("ErrorLog.txt");
+            errorLog.Filter = new EventTypeFilter(SourceLevels.Error);
         }
 
         /// <summary>

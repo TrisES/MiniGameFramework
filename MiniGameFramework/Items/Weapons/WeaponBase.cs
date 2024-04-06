@@ -7,14 +7,10 @@ namespace MiniGameFramework.Items.Weapons
     /// </summary>
     public abstract class WeaponBase : IWeapon
     {
-        public abstract string Name { get; set; }
-        public abstract int Damage { get; set; }
+        public abstract string Name { get; }
+        public abstract int Damage { get; }
 
-        public WeaponBase(string name, int damage)
-        {
-            Name = name;
-            Damage = damage;
-        }
+        public WeaponBase(){}
 
         public override string ToString()
         {

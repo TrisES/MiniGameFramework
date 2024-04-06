@@ -6,6 +6,6 @@
     /// <seealso cref="IItem" />
     public interface IWeapon : IItem
     {
-        int Damage { get; set; }
+        int Damage { get; }
     }
 }
