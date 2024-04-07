@@ -43,5 +43,10 @@ namespace MiniGameFramework.Creatures.Concrete
                 return (MainHandWeapon?.Damage ?? 0) + (OffHandWeapon?.Damage ?? 0);
             }
         }
+
+        public override void Update()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
