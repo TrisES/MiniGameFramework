@@ -1,6 +1,6 @@
 ﻿using MiniGameFramework.Creatures.CombatStrategy;
 using MiniGameFramework.Items;
-using MiniGameFramework.Items.Armor;
+using MiniGameFramework.Items.Armor.Interfaces;
 using MiniGameFramework.Items.Weapons.Interfaces;
 using MiniGameFramework.Logging;
 using MiniGameFramework.WorldClasses;

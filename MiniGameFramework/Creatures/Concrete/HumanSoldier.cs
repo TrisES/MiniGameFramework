@@ -1,4 +1,4 @@
-﻿using MiniGameFramework.Items.Armor;
+﻿using MiniGameFramework.Items.Armor.Interfaces;
 using MiniGameFramework.Items.Weapons.Interfaces;
 
 namespace MiniGameFramework.Creatures.Concrete
