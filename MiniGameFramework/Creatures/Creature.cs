@@ -12,6 +12,7 @@ namespace MiniGameFramework.Creatures
     {
         #region Properties
         public int Health { get; set; }
+        public int MaxHealth { get; set; }
         public int BaseDefense { get; set; }
         public int BaseAttack { get; set; }
 
@@ -91,20 +92,18 @@ namespace MiniGameFramework.Creatures
         public ICombatStrategy CombatStrategy { get; set; }
         #endregion
 
-        public Creature(string name, int health = 100, int baseDefense = 10, int baseAttack = 10) : base(name)
+        public Creature(string name, int maxHealth = 100, int baseDefense = 10, int baseAttack = 10) : base(name)
         {
             Name = name;
-            Health = health;
+            Health = maxHealth;
+            MaxHealth = maxHealth;
             BaseDefense = baseDefense;
             BaseAttack = baseAttack;
             Inventory = new Inventory();
             CombatStrategy = new CombatStrategyNormal();
         }
 
-        public override void Update()
-        {
-            throw new NotImplementedException();
-        }
+
         public void Attack(Creature target)
         {
             int damage = CombatStrategy.CalculateDamage(this);
@@ -115,7 +114,7 @@ namespace MiniGameFramework.Creatures
         public void ReceiveDamage(int damage)
         {
             int defense = CombatStrategy.CalculateDefense(this);
-            int actualDamage = Math.Max(0, damage - defense); // Ensure damage taken is not negative'
+            int actualDamage = Math.Max(0, damage - defense); // Ensure damage taken is not negative using Math.Max
             Health -= actualDamage;
             GameLogger.Log($"{Name}({CombatStrategy.Name}) has {defense} defense and receives {actualDamage} damage. Remaining health: {Health}");
         }
@@ -123,6 +122,16 @@ namespace MiniGameFramework.Creatures
         public int Attack()
         {
             return CombatStrategy.CalculateDamage(this);
+        }
+
+        public int Defend()
+        {
+            return CombatStrategy.CalculateDefense(this);
+        }
+
+        public void RecieveHealing(int healing)
+        {
+            Health = Math.Min(MaxHealth, Health + healing); // Ensure health does not exceed max health using Math.Min
         }
 
         public bool MoveTo(Tile destinationTile)
