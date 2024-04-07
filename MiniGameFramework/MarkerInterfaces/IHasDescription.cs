@@ -1,4 +1,4 @@
-﻿namespace MiniGameFramework.GeneralInterfaces
+﻿namespace MiniGameFramework.MarkerInterfaces
 {
     public interface IHasDescription
     {
