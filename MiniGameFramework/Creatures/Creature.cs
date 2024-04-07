@@ -13,10 +13,10 @@ namespace MiniGameFramework.Creatures
     public abstract class Creature : WorldObject
     {
         #region Properties
-        public int Health { get; set; }
-        public int MaxHealth { get; set; }
-        public int BaseDefense { get; set; }
-        public int BaseAttack { get; set; }
+        public virtual int Health { get; set; }
+        public virtual int MaxHealth { get; set; }
+        public virtual int BaseDefense { get; set; }
+        public virtual int BaseAttack { get; set; }
 
         /// <summary>
         /// Gets the sum of the defense values of all armor items equipped by the creature.
@@ -90,8 +90,8 @@ namespace MiniGameFramework.Creatures
             }
         }
 
-        public IRepositoryGUID<IItem> Inventory { get; set; }
-        public ICombatStrategy CombatStrategy { get; set; }
+        public virtual IRepositoryGUID<IItem> Inventory { get; set; }
+        public virtual ICombatStrategy CombatStrategy { get; set; }
         #endregion
 
         public Creature(string name, int maxHealth = 100, int baseDefense = 10, int baseAttack = 10, IRepositoryGUID<IItem>? inventory = null, ICombatStrategy? combatStrategy = null) : base(name)
@@ -108,16 +108,19 @@ namespace MiniGameFramework.Creatures
             // the combat strategy is optional, if not provided, use the default one
             CombatStrategy = combatStrategy ?? new CombatStrategyNormal();
         }
+        public override void Update()
+        {
+            // Implement logic for creature updates. This could include AI logic, movement, etc.
+        }
 
-
-        public void Attack(Creature target)
+        public virtual void Attack(Creature target)
         {
             int damage = CombatStrategy.CalculateDamage(this);
             GameLogger.Log($"{Name}({CombatStrategy.Name}) attacks {target.Name} for {damage} damage.");
             target.ReceiveDamage(damage);
         }
 
-        public void ReceiveDamage(int damage)
+        public virtual void ReceiveDamage(int damage)
         {
             int defense = CombatStrategy.CalculateDefense(this);
             int actualDamage = Math.Max(0, damage - defense); // Ensure damage taken is not negative using Math.Max
@@ -125,22 +128,22 @@ namespace MiniGameFramework.Creatures
             GameLogger.Log($"{Name}({CombatStrategy.Name}) has {defense} defense and receives {actualDamage} damage. Remaining health: {Health}");
         }
 
-        public int Attack()
+        public virtual int Attack()
         {
             return CombatStrategy.CalculateDamage(this);
         }
 
-        public int Defend()
+        public virtual int Defend()
         {
             return CombatStrategy.CalculateDefense(this);
         }
 
-        public void RecieveHealing(int healing)
+        public virtual void RecieveHealing(int healing)
         {
             Health = Math.Min(MaxHealth, Health + healing); // Ensure health does not exceed max health using Math.Min
         }
 
-        public bool MoveTo(Tile destinationTile)
+        public virtual bool MoveTo(Tile destinationTile)
         {
             // Check if the destination tile is valid and not blocked
             if (destinationTile == null || !CanMoveTo(destinationTile))
