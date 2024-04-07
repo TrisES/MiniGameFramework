@@ -10,7 +10,7 @@ namespace MiniGameFramework.Items.Armor.Factory
         {
             GameLogger.Log($"{this.GetType().Name} - trying to create armor: \"{armor}\"", TraceEventType.Information);
 
-            IArmor armorObject = null;
+            IArmor armorObject;
             switch (armor)
             {
                 case "Iron Helmet":

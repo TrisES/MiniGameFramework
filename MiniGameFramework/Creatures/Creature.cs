@@ -3,6 +3,8 @@ using MiniGameFramework.Items;
 using MiniGameFramework.Items.Armor.Interfaces;
 using MiniGameFramework.Items.Weapons.Interfaces;
 using MiniGameFramework.Logging;
+using MiniGameFramework.Repository.Base;
+using MiniGameFramework.Repository.Interfaces;
 using MiniGameFramework.WorldClasses;
 using System.Reflection;
 
@@ -88,19 +90,23 @@ namespace MiniGameFramework.Creatures
             }
         }
 
-        public IInventory Inventory { get; set; }
+        public IRepositoryGUID<IItem> Inventory { get; set; }
         public ICombatStrategy CombatStrategy { get; set; }
         #endregion
 
-        public Creature(string name, int maxHealth = 100, int baseDefense = 10, int baseAttack = 10) : base(name)
+        public Creature(string name, int maxHealth = 100, int baseDefense = 10, int baseAttack = 10, IRepositoryGUID<IItem>? inventory = null, ICombatStrategy? combatStrategy = null) : base(name)
         {
             Name = name;
             Health = maxHealth;
             MaxHealth = maxHealth;
             BaseDefense = baseDefense;
             BaseAttack = baseAttack;
-            Inventory = new Inventory();
-            CombatStrategy = new CombatStrategyNormal();
+
+            // the inventory is optional, if not provided, use the default one (which is GuidRepoBaseDictionary<IItem> for now)
+            Inventory = inventory ?? new GuidRepoBaseDictionary<IItem>();
+
+            // the combat strategy is optional, if not provided, use the default one
+            CombatStrategy = combatStrategy ?? new CombatStrategyNormal();
         }
 
 

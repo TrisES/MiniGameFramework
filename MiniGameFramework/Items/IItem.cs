@@ -2,7 +2,7 @@
 
 namespace MiniGameFramework.Items
 {
-    public interface IItem : IHasName
+    public interface IItem : IHasName, IHasGuid
     {
     }
 }
