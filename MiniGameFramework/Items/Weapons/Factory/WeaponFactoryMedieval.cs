@@ -5,6 +5,8 @@ namespace MiniGameFramework.Items.Weapons.Factory
 {
     public class WeaponFactoryMedieval : IWeaponFactoryMethod
     {
+        GameLogger GameLogger = GameLogger.Instance;
+
         public IWeapon CreateWeapon(WeaponEnum weapon)
         {
             switch (weapon)

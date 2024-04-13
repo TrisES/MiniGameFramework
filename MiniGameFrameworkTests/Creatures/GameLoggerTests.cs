@@ -15,11 +15,13 @@ namespace MiniGameFrameworkTests.Logging.Tests
             string expectedMessage = "Test message";
             TraceEventType expectedEventType = TraceEventType.Information;
 
+            GameLogger gameLogger = GameLogger.Instance;
+
             // Act
-            GameLogger.Log(expectedMessage, expectedEventType);
+            gameLogger.Log(expectedMessage, expectedEventType);
 
             // Close the GameLogger
-            GameLogger.Close();
+            gameLogger.Close();
 
             // Assert
             // Check the log file to see if the message was written
@@ -35,11 +37,13 @@ namespace MiniGameFrameworkTests.Logging.Tests
             string expectedMessage = "Test error message";
             TraceEventType expectedEventType = TraceEventType.Error;
 
+            GameLogger gameLogger = GameLogger.Instance;
+
             // Act
-            GameLogger.Log(expectedMessage, expectedEventType);
+            gameLogger.Log(expectedMessage, expectedEventType);
 
             // Close the GameLogger
-            GameLogger.Close();
+            gameLogger.Close();
 
             // Assert
             // Check the error log file to see if the message was written

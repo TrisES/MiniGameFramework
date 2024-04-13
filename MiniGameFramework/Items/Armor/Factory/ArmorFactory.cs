@@ -6,6 +6,8 @@ namespace MiniGameFramework.Items.Armor.Factory
 {
     public class ArmorFactory : IArmorFactoryMethod
     {
+        GameLogger GameLogger = GameLogger.Instance;
+
         public IArmor CreateArmor(string armor)
         {
             GameLogger.Log($"{this.GetType().Name} - trying to create armor: \"{armor}\"", TraceEventType.Information);

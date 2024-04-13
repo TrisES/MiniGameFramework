@@ -77,7 +77,7 @@ namespace MiniGameFramework.Logging
         /// <summary>
         /// Closes the trace source.
         /// </summary>
-        public static void Close()
+        public void Close()
         {
             traceSource.Close();
         }
