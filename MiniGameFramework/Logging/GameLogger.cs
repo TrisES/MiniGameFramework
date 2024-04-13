@@ -5,15 +5,19 @@ namespace MiniGameFramework.Logging
     /// <summary>
     /// Provides logging functionality for the game.
     /// </summary>
-    public static class GameLogger
+    public class GameLogger : IGameLogger
     {
+        // TODO: kunne laves thread safe i fremtiden. (F.eks. kunne man forestille sig at flere kampe foregik samtidigt)
+        // Singleton instance
+        private static GameLogger instance = null;
+
         // Using built-in class, TraceSource, for logging
         private static readonly TraceSource traceSource = new TraceSource("GameTraceSource");
 
         /// <summary>
-        /// Static constructor for the GameLogger class.
+        /// Private constructor for the GameLogger class.
         /// </summary>
-        static GameLogger()
+        private GameLogger()
         {
 
             // Delete the log files if they exist (to start fresh)
@@ -40,6 +44,37 @@ namespace MiniGameFramework.Logging
         }
 
         /// <summary>
+        /// Gets the singleton instance of the GameLogger class.
+        /// If the instance does not exist, it creates a new one.
+        /// Else, it returns the existing instance.
+        /// </summary>
+        public static GameLogger Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new GameLogger();
+                }
+                return instance;
+            }
+        }
+
+        /// <summary>
+        /// Logs a message with the specified event type.
+        /// </summary>
+        /// <param name="message">The message to be logged</param>
+        /// <param name="eventType">The type of event. If none specified, defaults to "TraceEventType.Information"</param>
+        public void Log(string message, TraceEventType eventType = TraceEventType.Information)
+        {
+            int processId = Process.GetCurrentProcess().Id; // Get the process ID
+            string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"); // Get the current timestamp
+            string logMessage = $"[{timestamp}] {message}"; // Add timestamp to the log message
+            traceSource.TraceEvent(eventType, processId, message);
+            traceSource.Flush();
+        }
+
+        /// <summary>
         /// Closes the trace source.
         /// </summary>
         public static void Close()
@@ -48,15 +83,23 @@ namespace MiniGameFramework.Logging
         }
 
         /// <summary>
-        /// Logs a message with the specified event type.
+        /// Adds a TraceListener to the TraceSource.
         /// </summary>
-        /// <param name="message">The message to be logged</param>
-        /// <param name="eventType">The type of event. If none specified, defaults to "TraceEventType.Information"</param>
-        public static void Log(string message, TraceEventType eventType = TraceEventType.Information)
+        /// <param name="listener">The TraceListener to be added.</param>
+        public void AddListener(TraceListener listener)
         {
-            traceSource.TraceEvent(eventType, 0, message);
-            traceSource.Flush();
+            traceSource.Listeners.Add(listener);
         }
+
+        /// <summary>
+        /// Removes a TraceListener from the TraceSource.
+        /// </summary>
+        /// <param name="listener">The TraceListener to be removed.</param>
+        public void RemoveListener(TraceListener listener)
+        {
+            traceSource.Listeners.Remove(listener);
+        }
+
     }
 }   
 

@@ -92,9 +92,13 @@ namespace MiniGameFramework.Creatures
 
         public virtual IRepositoryGUID<IItem> Inventory { get; set; }
         public virtual ICombatStrategy CombatStrategy { get; set; }
+
+        private readonly IGameLogger _logger;
         #endregion
 
-        public Creature(string name, int maxHealth = 100, int baseDefense = 10, int baseAttack = 10, IRepositoryGUID<IItem>? inventory = null, ICombatStrategy? combatStrategy = null) : base(name)
+        public Creature(
+            string name, int maxHealth = 100, int baseDefense = 10, int baseAttack = 10, 
+            IRepositoryGUID<IItem>? inventory = null, ICombatStrategy? combatStrategy = null, IGameLogger? logger = null) : base(name)
         {
             Name = name;
             Health = maxHealth;
@@ -107,6 +111,9 @@ namespace MiniGameFramework.Creatures
 
             // the combat strategy is optional, if not provided, use the default one
             CombatStrategy = combatStrategy ?? new CombatStrategyNormal();
+
+            // the logger is optional, if not provided, use the default one
+            _logger = logger ?? GameLogger.Instance;
         }
         public override void Update()
         {
@@ -116,7 +123,7 @@ namespace MiniGameFramework.Creatures
         public virtual void Attack(Creature target)
         {
             int damage = CombatStrategy.CalculateDamage(this);
-            GameLogger.Log($"{Name}({CombatStrategy.Name}) attacks {target.Name} for {damage} damage.");
+            _logger.Log($"{Name}({CombatStrategy.Name}) attacks {target.Name} for {damage} damage.");
             target.ReceiveDamage(damage);
         }
 
@@ -125,7 +132,7 @@ namespace MiniGameFramework.Creatures
             int defense = CombatStrategy.CalculateDefense(this);
             int actualDamage = Math.Max(0, damage - defense); // Ensure damage taken is not negative using Math.Max
             Health -= actualDamage;
-            GameLogger.Log($"{Name}({CombatStrategy.Name}) has {defense} defense and receives {actualDamage} damage. Remaining health: {Health}");
+            _logger.Log($"{Name}({CombatStrategy.Name}) has {defense} defense and receives {actualDamage} damage. Remaining health: {Health}");
         }
 
         public virtual int Attack()
