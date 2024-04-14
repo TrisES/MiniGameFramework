@@ -7,6 +7,8 @@ namespace MiniGameFramework.Repository.Base
     {
         protected readonly List<T> _list;
 
+        public int Count => _list.Count;
+
         public GuidRepoBaseList()
         {
             _list = new List<T>();
@@ -39,6 +41,35 @@ namespace MiniGameFramework.Repository.Base
             }
             return null;
         }
-        
+
+        /// <summary>
+        /// Checks if an entity with the specified GUID exists in the repository.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public bool Exists(Guid id)
+        {
+            return _list.Any(e => e.Id == id);
+        }
+
+        /// <summary>
+        /// Gets a list of entities that match the specified predicate.
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public IEnumerable<T> Get(Func<T, bool> predicate)
+        {
+            return _list.Where(predicate);
+        }
+
+        /// <summary>
+        /// Gets the first entity that matches the specified predicate.
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public T? GetFirst(Func<T, bool> predicate)
+        {
+            return _list.FirstOrDefault(predicate);
+        }
     }
 }

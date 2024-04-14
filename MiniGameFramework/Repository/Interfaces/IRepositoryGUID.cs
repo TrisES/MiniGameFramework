@@ -42,5 +42,29 @@ namespace MiniGameFramework.Repository.Interfaces
         /// <param name="entity">The updated entity data.</param>
         /// <returns>The updated entity, or null if it is not found.</returns>
         //T? Update(Guid id, T entity);
+
+        #region Mere "eksotiske" metoder
+        /// <summary>
+        /// Checks if an entity with the specified GUID exists in the repository.
+        /// </summary>
+        bool Exists(Guid id);
+
+        /// <summary>
+        /// Gets a list of entities that match the specified predicate.
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        IEnumerable<T> Get(Func<T, bool> predicate);
+
+        /// <summary>
+        /// Gets the first entity that matches the specified predicate.
+        /// </summary>
+        T? GetFirst(Func<T, bool> predicate);
+
+        /// <summary>
+        /// Gets the number of entities in the repository.
+        /// </summary>
+        public int Count { get; }
+        #endregion
     }
 }

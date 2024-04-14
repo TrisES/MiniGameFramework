@@ -9,7 +9,7 @@
     {
         protected Creature _creature;
 
-        public CreatureDecorator(Creature creature) : base(creature.Name, creature.Health, creature.BaseDefense, creature.BaseAttack, creature.Inventory, creature.CombatStrategy)
+        public CreatureDecorator(Creature creature) : base(creature.Name, creature.MaxHealth, creature.BaseDefense, creature.BaseAttack, creature.Inventory, creature.CombatStrategy, currentHealth:creature.Health)
         {
             _creature = creature;
         }

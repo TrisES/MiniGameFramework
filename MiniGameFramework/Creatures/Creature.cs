@@ -98,11 +98,19 @@ namespace MiniGameFramework.Creatures
 
         public Creature(
             string name, int maxHealth = 100, int baseDefense = 10, int baseAttack = 10, 
-            IRepositoryGUID<IItem>? inventory = null, ICombatStrategy? combatStrategy = null, IGameLogger? logger = null) : base(name)
+            IRepositoryGUID<IItem>? inventory = null, ICombatStrategy? combatStrategy = null, IGameLogger? logger = null, int? currentHealth = null) : base(name)
         {
-            Name = name;
-            Health = maxHealth;
+            if (currentHealth != null)
+            {
+                Health = currentHealth.Value;
+            } else
+            {
+                Health = maxHealth;
+            }
+
             MaxHealth = maxHealth;
+
+            Name = name;
             BaseDefense = baseDefense;
             BaseAttack = baseAttack;
 
@@ -150,6 +158,11 @@ namespace MiniGameFramework.Creatures
             Health = Math.Min(MaxHealth, Health + healing); // Ensure health does not exceed max health using Math.Min
         }
 
+        public virtual void FullHeal()
+        {
+            Health = MaxHealth;
+        }
+
         public virtual bool MoveTo(Tile destinationTile)
         {
             // Check if the destination tile is valid and not blocked
@@ -172,5 +185,12 @@ namespace MiniGameFramework.Creatures
             // Implement logic to check if the tile is walkable. This could include checking for obstacles.
             return tile.Contents.All(obj => obj is not Creature); // Example condition: no other creatures on the tile
         }
+
+        /// <summary>
+        /// Equip an item to the creature.
+        /// </summary>
+        /// <param name="equipment">The item to equip</param>
+        /// <returns>True or False. True if item was equipped, otherwise False</returns>
+        public abstract bool Equip(IItem equipment);
     }
 }

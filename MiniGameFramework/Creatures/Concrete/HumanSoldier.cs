@@ -1,4 +1,5 @@
-﻿using MiniGameFramework.Items.Armor.Interfaces;
+﻿using MiniGameFramework.Items;
+using MiniGameFramework.Items.Armor.Interfaces;
 using MiniGameFramework.Items.Weapons.Interfaces;
 
 namespace MiniGameFramework.Creatures.Concrete
@@ -47,6 +48,63 @@ namespace MiniGameFramework.Creatures.Concrete
         public override void Update()
         {
             throw new NotImplementedException();
+        }
+
+        //public override bool Equip(IItem equipment)
+        //{
+        //    if (equipment is IHeadArmor headArmor)
+        //    {
+        //        HeadArmor = headArmor;
+        //        return true;
+        //    }
+        //    else if (equipment is IBodyArmor bodyArmor)
+        //    {
+        //        BodyArmor = bodyArmor;
+        //        return true;
+        //    }
+        //    else if (equipment is ILegArmor legArmor)
+        //    {
+        //        LegArmor = legArmor;
+        //        return true;
+        //    }
+        //    else if (equipment is IMainHandWeapon mainHandWeapon)
+        //    {
+        //        MainHandWeapon = mainHandWeapon;
+        //        return true;
+        //    }
+        //    else if (equipment is IOffHandWeapon offHandWeapon)
+        //    {
+        //        OffHandWeapon = offHandWeapon;
+        //        return true;
+        //    }
+        //    else
+        //    {
+        //        return false;
+        //    }
+        //}
+
+        public override bool Equip(IItem equipment)
+        {
+            switch (equipment)
+            {
+                case IHeadArmor headArmor when headArmor != null:
+                    HeadArmor = headArmor;
+                    return true;
+                case IBodyArmor bodyArmor when bodyArmor != null:
+                    BodyArmor = bodyArmor;
+                    return true;
+                case ILegArmor legArmor when legArmor != null:
+                    LegArmor = legArmor;
+                    return true;
+                case IMainHandWeapon mainHandWeapon when mainHandWeapon != null:
+                    MainHandWeapon = mainHandWeapon;
+                    return true;
+                case IOffHandWeapon offHandWeapon when offHandWeapon != null:
+                    OffHandWeapon = offHandWeapon;
+                    return true;
+                default:
+                    return false;
+            }
         }
     }
 }

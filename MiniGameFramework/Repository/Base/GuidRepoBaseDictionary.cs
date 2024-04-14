@@ -7,6 +7,8 @@ namespace MiniGameFramework.Repository.Base
     {
         protected readonly Dictionary<Guid, T> _dictionary;
 
+        public int Count => _dictionary.Count;
+
         public GuidRepoBaseDictionary() 
         {
             _dictionary = new Dictionary<Guid, T>();
@@ -39,5 +41,19 @@ namespace MiniGameFramework.Repository.Base
             return null;
         }
 
+        public bool Exists(Guid id)
+        {
+            return _dictionary.ContainsKey(id);
+        }
+
+        public IEnumerable<T> Get(Func<T, bool> predicate)
+        {
+            return _dictionary.Values.Where(predicate);
+        }
+
+        public T? GetFirst(Func<T, bool> predicate)
+        {
+            return _dictionary.Values.FirstOrDefault(predicate);
+        }
     }
 }
