@@ -118,18 +118,25 @@ namespace MiniGameFrameworkTests.Creatures.Tests
         public void FightWithEquipmentTest()
         {
             // Arrange (create, armor and weapon factories)
-            Creature attacker = new HumanSoldier("Soldier AAA", 100, 10, 10);
-            Creature defender = new HumanSoldier("Soldier BBB", 100, 10, 10);
+            Creature attacker = new HumanSoldier("Soldier AAA", 100, 0, 10);
+            Creature defender = new HumanSoldier("Soldier BBB", 100, 0, 10);
             IArmorFactoryMethod armorFactory = new ArmorFactory();
             IWeaponFactoryMethod weaponFactory = new WeaponFactoryMedieval();
 
             // Act
             attacker.Inventory.Add(armorFactory.CreateArmor("Iron Helmet")); // +3 defense
             attacker.Inventory.Add(weaponFactory.CreateWeapon(WeaponEnum.Dagger)); // +5 attack
-            attacker.Attack(defender);
+            Assert.AreEqual(2, attacker.Inventory.Count);
+            attacker.Equip(attacker.Inventory.GetFirst(helmet => helmet.Name == "Iron Helmet"));
+            attacker.Equip(attacker.Inventory.GetFirst(weapon => weapon.Name == "Iron Dagger"));
+            Assert.AreEqual(0, attacker.Inventory.Count);
+
+            attacker.Attack(defender); // 10(base) + 5(weapon) = 15 damage
+            defender.Attack(attacker); // 10(base) - 3(helmet) = 7 damage
 
             // Assert
-            Assert.AreEqual(90, defender.Health);
+            Assert.AreEqual(85, defender.Health);
+            Assert.AreEqual(93, attacker.Health);
         }
     }
 }

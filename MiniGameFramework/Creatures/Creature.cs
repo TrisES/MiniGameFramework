@@ -191,6 +191,6 @@ namespace MiniGameFramework.Creatures
         /// </summary>
         /// <param name="equipment">The item to equip</param>
         /// <returns>True or False. True if item was equipped, otherwise False</returns>
-        public abstract bool Equip(IItem equipment);
+        public virtual bool Equip(IItem equipment) { throw new NotImplementedException();}
     }
 }

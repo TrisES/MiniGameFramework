@@ -83,24 +83,35 @@ namespace MiniGameFramework.Creatures.Concrete
         //    }
         //}
 
+        /// <inheritdoc />
         public override bool Equip(IItem equipment)
         {
             switch (equipment)
             {
-                case IHeadArmor headArmor when headArmor != null:
-                    HeadArmor = headArmor;
+                case IHeadArmor headArmor when headArmor != null: // If the equipment is head armor and not null
+                    if (HeadArmor != null) Inventory.Add(HeadArmor); // Add the currently equipped head armor to the inventory
+                    HeadArmor = headArmor; // Equip the new head armor
+                    Inventory.Delete(equipment.Id); // Remove the new head armor from the inventory
                     return true;
                 case IBodyArmor bodyArmor when bodyArmor != null:
+                    if (BodyArmor != null) Inventory.Add(BodyArmor);
                     BodyArmor = bodyArmor;
+                    Inventory.Delete(equipment.Id);
                     return true;
                 case ILegArmor legArmor when legArmor != null:
+                    if (LegArmor != null) Inventory.Add(LegArmor);
                     LegArmor = legArmor;
+                    Inventory.Delete(equipment.Id);
                     return true;
                 case IMainHandWeapon mainHandWeapon when mainHandWeapon != null:
+                    if (MainHandWeapon != null) Inventory.Add(MainHandWeapon);
                     MainHandWeapon = mainHandWeapon;
+                    Inventory.Delete(equipment.Id);
                     return true;
                 case IOffHandWeapon offHandWeapon when offHandWeapon != null:
+                    if (OffHandWeapon != null) Inventory.Add(OffHandWeapon);
                     OffHandWeapon = offHandWeapon;
+                    Inventory.Delete(equipment.Id);
                     return true;
                 default:
                     return false;
