@@ -8,7 +8,6 @@ namespace MiniGameFramework.WorldClasses
         public int Height { get; set; }
         public Tile[,] TilesGrid { get; set; }
 
-        public World() { }
         public World(int width, int height)
         {
             InitializeTiles(width, height);
@@ -82,20 +81,20 @@ namespace MiniGameFramework.WorldClasses
             return TilesGrid[x, y];
         }
 
-        public void AddObject(WorldObject obj, int x, int y)
+        public void AddObject(IWorldObject obj, int x, int y)
         {
             CheckBounds(x, y);
             obj.CurrentTile = TilesGrid[x, y];
             TilesGrid[x, y].Contents.Add(obj);
         }
 
-        public void RemoveObject(WorldObject obj)
+        public void RemoveObject(IWorldObject obj)
         {
             obj.CurrentTile?.Contents.Remove(obj);
             obj.CurrentTile = null;
         }
 
-        public void RemoveObject(WorldObject obj, int x, int y)
+        public void RemoveObject(IWorldObject obj, int x, int y)
         {
             CheckBounds(x, y);
             obj.CurrentTile?.Contents.Remove(obj);

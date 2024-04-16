@@ -3,6 +3,7 @@ using MiniGameFramework.Items;
 using MiniGameFramework.Items.Armor.Interfaces;
 using MiniGameFramework.Items.Weapons.Interfaces;
 using MiniGameFramework.Logging;
+using MiniGameFramework.MarkerInterfaces;
 using MiniGameFramework.Repository.Base;
 using MiniGameFramework.Repository.Interfaces;
 using MiniGameFramework.WorldClasses;
@@ -13,9 +14,14 @@ namespace MiniGameFramework.Creatures
     /// <summary>
     /// Represents a creature in the game world.
     /// </summary>
-    public abstract class Creature : WorldObject
+    public abstract class Creature : IHasName, IWorldObject
     {
         #region Properties
+        /// <inheritdoc/>
+        public string Name { get; set; }
+        /// <inheritdoc/>
+        public Tile? CurrentTile { get; set; }
+
         /// <summary>
         /// Gets or sets the health of the creature.
         /// </summary>
@@ -129,7 +135,7 @@ namespace MiniGameFramework.Creatures
         /// </summary>
         public Creature(
             string name, int maxHealth = 100, int baseDefense = 10, int baseAttack = 10, 
-            IRepositoryGUID<IItem>? inventory = null, ICombatStrategy? combatStrategy = null, IGameLogger? logger = null, int? currentHealth = null) : base(name)
+            IRepositoryGUID<IItem>? inventory = null, ICombatStrategy? combatStrategy = null, IGameLogger? logger = null, int? currentHealth = null)
         {
             if (currentHealth != null)
             {
@@ -252,21 +258,33 @@ namespace MiniGameFramework.Creatures
         public abstract bool Equip(IItem equipment); //{ throw new NotImplementedException();}
 
         /// <summary>
-        /// Loot items on the ground(current tile) to the creature's inventory.
+        /// Loot items on the ground(current tile) to the creature's inventory, removing them from the tile.
         /// </summary>
-        public virtual void Loot() 
+        public virtual void Loot()
         {
             // if current tile is not null, add all items on the tile to the creature's inventory and remove them from the tile accordingly
             if (CurrentTile == null) return;
 
-            foreach (WorldObject item in CurrentTile.Contents)
+            // Create a list to store the items to be removed (to avoid modifying the collection while iterating)
+            List<IItem> itemsToRemove = new List<IItem>();
+
+            // Iterate through all objects on the tile
+            foreach (IWorldObject obj in CurrentTile.Contents)
             {
-                // Check if the item is an IItem
-                if (item is IItem)
+                if (obj is IItem item)
                 {
-                    Inventory.Add((IItem)item); // Add the item to the inventory
-                    CurrentTile.Contents.Remove(item); // Remove the item from the tile after looting
+                    // Add the item to the inventory
+                    Inventory.Add(item);
+
+                    // Add the item to the list of items to be removed
+                    itemsToRemove.Add(item);
                 }
+            }
+
+            // Remove the items from the tile
+            foreach (IItem itemToRemove in itemsToRemove)
+            {
+                CurrentTile.Contents.Remove(itemToRemove);
             }
         }
     }

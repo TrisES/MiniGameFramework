@@ -36,13 +36,32 @@ namespace MiniGameFramework.WorldClasses.Tests
             }
         }
 
+        [TestMethod()] public void TestInitializeWorldFromConfig() 
+        { 
+            // Arrange (create a world from a config file) 
+            string configFilePath = @"C:\Temp\Config\WorldConfig.xml"; // assuming this file exists in the directory, with the correct format and values.
+            World world = new World(configFilePath); 
+
+            // Assert (check if the world has the correct dimensions and all tiles are initialized) 
+            Assert.AreEqual(10, world.Width); 
+            Assert.AreEqual(10, world.Height); 
+
+            for (int x = 0; x < world.Width; x++)
+            {
+                for (int y = 0; y < world.Height; y++)
+                {
+                    Assert.IsNotNull(world.GetTile(x, y)); 
+                } 
+            } 
+        }
+
         [TestMethod()]
         public void TestAddCreatures()
         {
             // Arrange (create a world and two creatures)
             World world = new World(10, 10);
-            WorldObject creature1 = new HumanSoldier("Soldier AAA", 100, 10, 10);
-            WorldObject creature2 = new HumanSoldier("Soldier BBB", 100, 10, 10);
+            IWorldObject creature1 = new HumanSoldier("Soldier AAA", 100, 10, 10);
+            IWorldObject creature2 = new HumanSoldier("Soldier BBB", 100, 10, 10);
 
             // Act (add the creatures to the world)
             world.AddObject(creature1, 1, 1);
@@ -62,7 +81,7 @@ namespace MiniGameFramework.WorldClasses.Tests
         {
             // Arrange (create a world and a creature)
             World world = new World(10, 10);
-            WorldObject creature = new HumanSoldier("Soldier AAA", 100, 10, 10);
+            IWorldObject creature = new HumanSoldier("Soldier AAA", 100, 10, 10);
 
             // Act (add the creature to the world)
             world.AddObject(creature, 1, 1);
@@ -93,16 +112,25 @@ namespace MiniGameFramework.WorldClasses.Tests
             Assert.IsFalse(world.GetTile(1, 1).Contents.Contains(creature));
         }
 
-        //[TestMethod()]
-        //public void CreatureLootsItemsOnTileTest()
-        //{
-        //    // Arrange (create Tile, creature and items)
-        //    Tile tile = new Tile(0, 0);
-        //    WorldObject creature = new HumanSoldier("Soldier AAA", 100, 10, 10);
-        //    IArmorFactoryMethod armorFactory = new ArmorFactory();
-        //    IWeaponFactoryMethod weaponFactory = new WeaponFactoryMedieval();
+        [TestMethod()]
+        public void CreatureLootsItemsOnTileTest()
+        {
+            // Arrange (create Tile, creature and items)
+            Tile tile = new Tile(0, 0);
+            Creature creature = new HumanSoldier("Soldier AAA", 100, 10, 10);
+            IArmorFactoryMethod armorFactory = new ArmorFactory();
+            IWeaponFactoryMethod weaponFactory = new WeaponFactoryMedieval();
 
-        //    tile.Contents.Add(armorFactory.CreateArmor("Iron Helmet"));
-        //}
+            // Act (add the creature and some items on the tile)
+            tile.AddObject(creature);
+            tile.AddObject(armorFactory.CreateArmor("Iron Helmet"));
+            tile.AddObject(weaponFactory.CreateWeapon(WeaponEnum.Dagger));
+
+            // Assert (check if the creature has the items in its inventory after looting the tile)
+            Assert.AreEqual(0, creature.Inventory.Count);
+            creature.Loot();
+            Assert.AreEqual(2, creature.Inventory.Count);
+        }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MiniGameFramework.Items.Weapons.Interfaces;
+using MiniGameFramework.WorldClasses;
 
 namespace MiniGameFramework.Items.Weapons
 {
@@ -10,6 +11,7 @@ namespace MiniGameFramework.Items.Weapons
         public Guid Id { get; set; }
         public abstract string Name { get; }
         public abstract int Damage { get; }
+        public Tile? CurrentTile { get; set; }
 
         public WeaponBase()
         { 
