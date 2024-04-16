@@ -104,58 +104,58 @@ namespace MiniGameFramework.WorldClasses
         }
 
         #region Update methods
-        /// <summary>
-        /// Updates the whole world. All objects in all tiles will be updated.
-        /// </summary>
-        public void UpdateWorld()
-        {
-            foreach (Tile tile in TilesGrid)
-            {
-                foreach (WorldObject obj in tile.Contents)
-                {
-                    obj.Update();
-                }
-            }
-        }
+        ///// <summary>
+        ///// Updates the whole world. All objects in all tiles will be updated.
+        ///// </summary>
+        //public void UpdateWorld()
+        //{
+        //    foreach (Tile tile in TilesGrid)
+        //    {
+        //        foreach (WorldObject obj in tile.Contents)
+        //        {
+        //            obj.Update();
+        //        }
+        //    }
+        //}
 
-        /// <summary>
-        /// Updates a part(an area) of the world. All objects in the tiles from startX to endX and startY to endY will be updated.
-        /// </summary>
-        /// <param name="startX"></param>
-        /// <param name="startY"></param>
-        /// <param name="endX"></param>
-        /// <param name="endY"></param>
-        public void UpdatePartOfWorld(int startX, int startY, int endX, int endY)
-        {
-            CheckBounds(startX, startY);
-            CheckBounds(endX, endY);
+        ///// <summary>
+        ///// Updates a part(an area) of the world. All objects in the tiles from startX to endX and startY to endY will be updated.
+        ///// </summary>
+        ///// <param name="startX"></param>
+        ///// <param name="startY"></param>
+        ///// <param name="endX"></param>
+        ///// <param name="endY"></param>
+        //public void UpdatePartOfWorld(int startX, int startY, int endX, int endY)
+        //{
+        //    CheckBounds(startX, startY);
+        //    CheckBounds(endX, endY);
 
-            for (int x = startX; x <= endX; x++)
-            {
-                for (int y = startY; y <= endY; y++)
-                {
-                    foreach (WorldObject obj in TilesGrid[x, y].Contents)
-                    {
-                        obj.Update();
-                    }
-                }
-            }
-        }
+        //    for (int x = startX; x <= endX; x++)
+        //    {
+        //        for (int y = startY; y <= endY; y++)
+        //        {
+        //            foreach (WorldObject obj in TilesGrid[x, y].Contents)
+        //            {
+        //                obj.Update();
+        //            }
+        //        }
+        //    }
+        //}
 
-        /// <summary>
-        /// Updates a part(single tile) of the world. All objects in the tile at x and y will be updated.
-        /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        public void UpdatePartOfWorld(int x, int y)
-        {
-            CheckBounds(x, y);
+        ///// <summary>
+        ///// Updates a part(single tile) of the world. All objects in the tile at x and y will be updated.
+        ///// </summary>
+        ///// <param name="x"></param>
+        ///// <param name="y"></param>
+        //public void UpdatePartOfWorld(int x, int y)
+        //{
+        //    CheckBounds(x, y);
 
-            foreach (WorldObject obj in TilesGrid[x, y].Contents)
-            {
-                obj.Update();
-            }
-        }
+        //    foreach (WorldObject obj in TilesGrid[x, y].Contents)
+        //    {
+        //        obj.Update();
+        //    }
+        //}
         #endregion
     }
 }

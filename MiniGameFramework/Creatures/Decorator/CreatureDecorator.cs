@@ -1,4 +1,6 @@
-﻿namespace MiniGameFramework.Creatures.Decorator
+﻿using MiniGameFramework.Items;
+
+namespace MiniGameFramework.Creatures.Decorator
 {
     /// <summary>
     /// Base class for creature decorators.
@@ -12,6 +14,11 @@
         public CreatureDecorator(Creature creature) : base(creature.Name, creature.MaxHealth, creature.BaseDefense, creature.BaseAttack, creature.Inventory, creature.CombatStrategy, currentHealth:creature.Health)
         {
             _creature = creature;
+        }
+
+        public override bool Equip(IItem item)
+        {
+            return _creature.Equip(item); // Forward the call to the decorated creature.
         }
     }
 }

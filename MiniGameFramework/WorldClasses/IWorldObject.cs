@@ -1,10 +1,11 @@
-﻿namespace MiniGameFramework.WorldClasses
+﻿using MiniGameFramework.MarkerInterfaces;
+
+namespace MiniGameFramework.WorldClasses
 {
-    public interface IWorldObject
+    public interface IWorldObject : IHasName
     {
         Tile? CurrentTile { get; set; }
-        string Name { get; set; }
 
-        void Update();
+        //void Update();
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MiniGameFramework.Creatures;
 using MiniGameFramework.Creatures.Concrete;
+using MiniGameFramework.Items.Armor.Factory;
+using MiniGameFramework.Items.Weapons.Factory;
 using MiniGameFramework.WorldClasses;
 using System;
 using System.Collections.Generic;
@@ -91,5 +93,16 @@ namespace MiniGameFramework.WorldClasses.Tests
             Assert.IsFalse(world.GetTile(1, 1).Contents.Contains(creature));
         }
 
+        //[TestMethod()]
+        //public void CreatureLootsItemsOnTileTest()
+        //{
+        //    // Arrange (create Tile, creature and items)
+        //    Tile tile = new Tile(0, 0);
+        //    WorldObject creature = new HumanSoldier("Soldier AAA", 100, 10, 10);
+        //    IArmorFactoryMethod armorFactory = new ArmorFactory();
+        //    IWeaponFactoryMethod weaponFactory = new WeaponFactoryMedieval();
+
+        //    tile.Contents.Add(armorFactory.CreateArmor("Iron Helmet"));
+        //}
     }
 }

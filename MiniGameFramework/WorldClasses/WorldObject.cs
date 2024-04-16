@@ -9,7 +9,5 @@
         {
             Name = name;
         }
-
-        public abstract void Update();
     }
 }

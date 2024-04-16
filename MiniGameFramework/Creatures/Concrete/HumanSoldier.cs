@@ -45,11 +45,6 @@ namespace MiniGameFramework.Creatures.Concrete
             }
         }
 
-        public override void Update()
-        {
-            throw new NotImplementedException();
-        }
-
         //public override bool Equip(IItem equipment)
         //{
         //    if (equipment is IHeadArmor headArmor)
@@ -83,7 +78,11 @@ namespace MiniGameFramework.Creatures.Concrete
         //    }
         //}
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Equips the specified equipment to the creature.
+        /// </summary>
+        /// <param name="equipment"></param>
+        /// <returns>True if item was equipped; Otherwise, False</returns>
         public override bool Equip(IItem equipment)
         {
             switch (equipment)
