@@ -70,8 +70,8 @@ namespace MiniGameFramework.Logging
             int processId = Process.GetCurrentProcess().Id; // Get the process ID
             string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"); // Get the current timestamp
             string logMessage = $"[{timestamp}] {message}"; // Add timestamp to the log message
-            traceSource.TraceEvent(eventType, processId, message);
-            traceSource.Flush();
+            traceSource.TraceEvent(eventType, processId, logMessage); // Log the message
+            traceSource.Flush(); // Flush the buffer after each write to ensure the message is written to the log file
         }
 
         /// <summary>

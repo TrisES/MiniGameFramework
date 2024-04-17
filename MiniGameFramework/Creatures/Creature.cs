@@ -16,6 +16,9 @@ namespace MiniGameFramework.Creatures
     /// </summary>
     public abstract class Creature : IHasName, IWorldObject
     {
+        private int _baseDefense;
+        private int _baseAttack;
+
         #region Properties
         /// <inheritdoc/>
         public string Name { get; set; }

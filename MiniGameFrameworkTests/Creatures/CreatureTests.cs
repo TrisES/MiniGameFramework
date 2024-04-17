@@ -18,6 +18,7 @@ namespace MiniGameFrameworkTests.Creatures.Tests
     [TestClass()]
     public class CreatureTests
     {
+
         [TestMethod()]
         public void AttackTest()
         {
@@ -72,7 +73,7 @@ namespace MiniGameFrameworkTests.Creatures.Tests
             Creature defender = new HumanSoldier("Soldier BBB", 100, 0, 10);
 
             // Act (attack buff (buffs baseAttack)
-            attacker = new AttackBuff(attacker, 10); // +10 damage, +10 health
+            attacker = new AttackBuff(attacker, 10); // +10 damage
             attacker.Attack(defender);
 
             // Assert

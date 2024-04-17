@@ -45,39 +45,6 @@ namespace MiniGameFramework.Creatures.Concrete
             }
         }
 
-        //public override bool Equip(IItem equipment)
-        //{
-        //    if (equipment is IHeadArmor headArmor)
-        //    {
-        //        HeadArmor = headArmor;
-        //        return true;
-        //    }
-        //    else if (equipment is IBodyArmor bodyArmor)
-        //    {
-        //        BodyArmor = bodyArmor;
-        //        return true;
-        //    }
-        //    else if (equipment is ILegArmor legArmor)
-        //    {
-        //        LegArmor = legArmor;
-        //        return true;
-        //    }
-        //    else if (equipment is IMainHandWeapon mainHandWeapon)
-        //    {
-        //        MainHandWeapon = mainHandWeapon;
-        //        return true;
-        //    }
-        //    else if (equipment is IOffHandWeapon offHandWeapon)
-        //    {
-        //        OffHandWeapon = offHandWeapon;
-        //        return true;
-        //    }
-        //    else
-        //    {
-        //        return false;
-        //    }
-        //}
-
         /// <summary>
         /// Equips the specified equipment to the creature.
         /// </summary>
@@ -116,5 +83,8 @@ namespace MiniGameFramework.Creatures.Concrete
                     return false;
             }
         }
+
+        // TODO: bør flytte Equip-metoden til en interface, så f.eks. alle IArmor eller IWeapon implementerer den.
+        // Vha. Refelction, så ville det være muligt at lave en generisk metode, der tager et IItem og kalder Equip på det.
     }
 }
