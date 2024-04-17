@@ -42,7 +42,7 @@ namespace MiniGameFrameworkTests.Logging.Tests
             // Act
             gameLogger.Log(expectedMessage, expectedEventType);
 
-            // Close the GameLogger
+            // Close the GameLogger (needed when testing the file writing)
             gameLogger.Close();
 
             // Assert

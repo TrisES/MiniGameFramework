@@ -46,7 +46,7 @@ namespace MiniGameFramework.Logging
         /// <summary>
         /// Gets the singleton instance of the GameLogger class.
         /// If the instance does not exist, it creates a new one.
-        /// Else, it returns the existing instance.
+        /// Otherwise, it returns the existing instance.
         /// </summary>
         public static GameLogger Instance
         {
